@@ -1,4 +1,4 @@
-# SSH Chat - Refactored Structure
+# SSH Chat
 
 ## File Organization
 
