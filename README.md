@@ -5,7 +5,8 @@
 ```
 ssh-chat/
 ├── chat.py                     (entry point)
-├── config.py                   (configuration)
+├── config.py                   (configuration loader)
+├── config.yml                  (yaml chat configurations)
 ├── server/                     (server implementation)
 │   ├── __init__.py
 │   ├── server.py               (ChatServer)
