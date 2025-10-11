@@ -1,0 +1,24 @@
+server:
+  host: "0.0.0.0"
+  port: 2222
+
+auth:
+  password: "pass"
+
+username:
+  max_length: 12
+  field_width: 12
+
+colors:
+  - 31  # red
+  - 32  # green
+  - 33  # yellow
+  - 34  # blue
+  - 35  # magenta
+  - 36  # cyan
+  - 91  # bright red
+  - 92  # bright green
+  - 93  # bright yellow
+  - 94  # bright blue
+  - 95  # bright magenta
+  - 96  # bright cyan
