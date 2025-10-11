@@ -1,12 +1,13 @@
-# SSH Chat - Refactored Structure
+# SSH Chat
 
 ## File Organization
 
 ```
 ssh-chat/
-├── chat.py                      (entry point)
-├── config.py                    (configuration)
-├── server/                      (server implementation)
+├── chat.py                     (entry point)
+├── config.py                   (configuration loader)
+├── config.yml                  (yaml chat configurations)
+├── server/                     (server implementation)
 │   ├── __init__.py
 │   ├── server.py               (ChatServer)
 │   ├── client_session.py       (ClientSession)
@@ -19,12 +20,12 @@ ssh-chat/
 
 
 ## Usage
-
+**Run the server:**
 ```bash
 make install && make run
 ```
 
-Connect with:
+**Connect with:**
 ```bash
 ssh -p 2222 <username>@localhost
 ```
