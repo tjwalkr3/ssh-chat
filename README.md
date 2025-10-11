@@ -4,9 +4,9 @@
 
 ```
 ssh-chat/
-├── chat.py                      (entry point)
-├── config.py                    (configuration)
-├── server/                      (server implementation)
+├── chat.py                     (entry point)
+├── config.py                   (configuration)
+├── server/                     (server implementation)
 │   ├── __init__.py
 │   ├── server.py               (ChatServer)
 │   ├── client_session.py       (ClientSession)
