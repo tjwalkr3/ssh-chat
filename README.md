@@ -19,12 +19,12 @@ ssh-chat/
 
 
 ## Usage
-
+**Run the server:**
 ```bash
 make install && make run
 ```
 
-Connect with:
+**Connect with:**
 ```bash
 ssh -p 2222 <username>@localhost
 ```
