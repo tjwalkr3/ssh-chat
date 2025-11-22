@@ -28,19 +28,16 @@ class ClientRegistry:
         
         with self.lock:
             for client_channel, client_username, input_buffer in self.clients:
-                try:
-                    if client_username == username:
-                        # For the sender, clear their input line, show message, show fresh prompt
-                        input_buffer.clear_line()
-                        client_channel.send(formatted_msg.encode())
-                        input_buffer.show_prompt()
-                    else:
-                        # For other clients, clear line, show message, redraw with their text
-                        input_buffer.clear_line()
-                        client_channel.send(formatted_msg.encode())
-                        input_buffer.redraw_input_line()
-                except:
-                    pass
+                redraw = input_buffer.show_prompt if client_username == username else input_buffer.redraw_input_line
+                self._send_formatted_message(client_channel, input_buffer, formatted_msg, redraw)
     
     def _get_color(self, username):
         return COLORS[hash(username) % len(COLORS)]
+
+    def _send_formatted_message(self, client_channel, input_buffer, formatted_msg, redraw_callback):
+        try:
+            input_buffer.clear_line()
+            client_channel.send(formatted_msg.encode())
+            redraw_callback()
+        except Exception:
+            pass
