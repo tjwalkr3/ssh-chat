@@ -12,6 +12,12 @@ class ClientSession:
         self.channel = None
         self.username = None
         self.input_buffer = None
+        self.char_handlers = {
+            '\r': self._handle_newline,
+            '\n': self._handle_newline,
+            '\x7f': self._handle_backspace,
+            '\x08': self._handle_backspace,
+        }
 
     def setup_ssh(self):
         self.transport = paramiko.Transport(self.conn)
@@ -31,17 +37,25 @@ class ClientSession:
         self.input_buffer.show_prompt()
 
     def process_character(self, char):
-        if char == '\r' or char == '\n':
-            self._handle_newline()
-        elif char == '\x7f' or char == '\x08':
-            self.input_buffer.remove_char()
-        elif char.isprintable():
-            self.input_buffer.add_char(char)
+        handler = self.char_handlers.get(char)
+        if handler:
+            handler()
+            return
+        if char.isprintable():
+            self._handle_printable(char)
 
     def _handle_newline(self):
         message = self.input_buffer.get_and_clear()
         if message:
             self.registry.broadcast(message, self.username)
+
+    def _handle_backspace(self):
+        if self.input_buffer:
+            self.input_buffer.remove_char()
+
+    def _handle_printable(self, char):
+        if self.input_buffer:
+            self.input_buffer.add_char(char)
 
     def run_chat_loop(self):
         while True:
