@@ -55,20 +55,8 @@ class ClientSession:
 
     def cleanup(self):
         self.registry.remove_client(self.channel, self.username)
-        if self.channel:
-            try:
-                self.channel.close()
-            except:
-                pass
-        if self.transport:
-            try:
-                self.transport.close()
-            except:
-                pass
-        try:
-            self.conn.close()
-        except:
-            pass
+        for resource in (self.channel, self.transport, self.conn):
+            self._safe_close(resource)
 
     def start(self):
         try:
@@ -88,3 +76,11 @@ class ClientSession:
             print(f"Error handling client {self.addr}: {e}")
         finally:
             self.cleanup()
+
+    def _safe_close(self, resource):
+        if not resource:
+            return
+        try:
+            resource.close()
+        except Exception:
+            pass
